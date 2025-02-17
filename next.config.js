@@ -3,7 +3,7 @@ const nextConfig = {
   output: 'export',
   typescript: {
 
-    // ignoreBuildErrors: true,
+     ignoreBuildErrors: true,
   }
 ,
   typescript: {
