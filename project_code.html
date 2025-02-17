@@ -1,0 +1,1901 @@
+<html><head><style>
+
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .folder { font-weight: bold; margin-top: 10px; }
+        .file { margin-left: 20px; color: blue; font-weight: bold; }
+        .content { margin-left: 40px; white-space: pre-wrap; font-family: monospace; color: black; border-left: 2px solid #ddd; padding-left: 10px; }
+    </style></head><body><h1>Project Files</h1>
+    
+<div class="file" style="margin-left: 0px;">📄 .eslintrc.json</div>
+<div class="content">// .eslintrc.json
+{
+    &quot;extends&quot;: &quot;next/core-web-vitals&quot;,
+    &quot;rules&quot;: {
+      &quot;react/no-unescaped-entities&quot;: &quot;off&quot;,
+      &quot;@typescript-eslint/no-unused-vars&quot;: [&quot;warn&quot;, {
+        &quot;argsIgnorePattern&quot;: &quot;^_&quot;,
+        &quot;varsIgnorePattern&quot;: &quot;^_&quot;
+      }],
+      &quot;@next/next/no-img-element&quot;: &quot;warn&quot;
+    }
+  }</div>
+<div class="file" style="margin-left: 0px;">📄 README.md</div>
+<div class="content">Here are several ways to clear Node modules cache and dependencies:
+
+1. Basic cleanup:
+```bash
+# Remove node_modules and package-lock.json
+rm -rf node_modules
+rm package-lock.json
+
+# Clear npm cache
+npm cache clean --force
+
+# Reinstall dependencies
+npm install
+```
+
+2. If you&#x27;re using yarn:
+```bash
+# Remove yarn cache
+yarn cache clean
+
+# Remove node_modules and yarn.lock
+rm -rf node_modules
+rm yarn.lock
+
+# Reinstall dependencies
+yarn install
+```
+
+3. Clear Next.js specific cache:
+```bash
+# Remove Next.js cache
+rm -rf .next
+
+# Remove both Next.js and node_modules
+rm -rf .next node_modules
+```
+
+4. Complete reset (most thorough):
+```bash
+# Remove all generated files and caches
+rm -rf node_modules
+rm -rf .next
+rm -rf .cache
+rm package-lock.json
+npm cache clean --force
+npm install
+```
+
+5. If you&#x27;re on Windows:
+```bash
+# Using PowerShell
+Remove-Item -Recurse -Force node_modules
+Remove-Item package-lock.json
+npm cache clean --force
+npm install
+```
+
+After any of these, run:
+```bash
+# Rebuild your project
+npm run build
+npm run dev
+```
+
+Choose the method that best fits your needs. The most common and usually sufficient approach is the first option.</div>
+<div class="file" style="margin-left: 0px;">📄 chat.txt</div>
+<div class="content">https://claude.ai/chat/3e034baf-ec46-4de9-870e-7212408f5122</div>
+<div class="file" style="margin-left: 0px;">📄 code.py</div>
+<div class="content">import os
+from html import escape
+
+# Specify files and folders to exclude
+EXCLUDED_FILES = {&quot;package-lock.json&quot;, &quot;.gitignore&quot;, &quot;webpack-runtime.js&quot;, &quot;trace&quot;}
+EXCLUDED_FOLDERS = {&quot;node_modules&quot;, &quot;.git&quot;, &quot;.astro&quot;, &quot;.vscode&quot;, &quot;.DS_Store&quot;, &quot;cache&quot;, &quot;app&quot;, &quot;static&quot;, &quot;server&quot;, &quot;build&quot;, &quot;.next&quot;, &quot;AI_details&quot;, &quot;graphql&quot;, &quot;public&quot;}
+
+def generate_file_tree_html(base_dir):
+    html_content = [&quot;&lt;html&gt;&lt;head&gt;&lt;style&gt;&quot;]
+    html_content.append(&quot;&quot;&quot;
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .folder { font-weight: bold; margin-top: 10px; }
+        .file { margin-left: 20px; color: blue; font-weight: bold; }
+        .content { margin-left: 40px; white-space: pre-wrap; font-family: monospace; color: black; border-left: 2px solid #ddd; padding-left: 10px; }
+    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Project Files&lt;/h1&gt;
+    &quot;&quot;&quot;)
+
+    def process_folder(folder, depth=0):
+        nonlocal html_content
+        for item in sorted(os.listdir(folder)):
+            item_path = os.path.join(folder, item)
+            # Skip excluded folders and files
+            if item in EXCLUDED_FOLDERS or item in EXCLUDED_FILES or item.endswith(&quot;.zip&quot;):
+                continue
+            if os.path.isdir(item_path):
+                html_content.append(f&#x27;&lt;div class=&quot;folder&quot; style=&quot;margin-left: {depth * 20}px;&quot;&gt;📁 {escape(item)}&lt;/div&gt;&#x27;)
+                process_folder(item_path, depth + 1)
+            else:
+                html_content.append(f&#x27;&lt;div class=&quot;file&quot; style=&quot;margin-left: {depth * 20}px;&quot;&gt;📄 {escape(item)}&lt;/div&gt;&#x27;)
+                try:
+                    with open(item_path, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as f:
+                        file_content = f.read()
+                    html_content.append(f&#x27;&lt;div class=&quot;content&quot;&gt;{escape(file_content)}&lt;/div&gt;&#x27;)
+                except Exception as e:
+                    html_content.append(f&#x27;&lt;div class=&quot;content&quot;&gt;[Error reading file: {e}]&lt;/div&gt;&#x27;)
+
+    process_folder(base_dir)
+    html_content.append(&quot;&lt;/body&gt;&lt;/html&gt;&quot;)
+    return &quot;\n&quot;.join(html_content)
+
+if __name__ == &quot;__main__&quot;:
+    base_dir = os.getcwd()
+    html_output = generate_file_tree_html(base_dir)
+    output_file = os.path.join(base_dir, &quot;project_code.html&quot;)
+    with open(output_file, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(html_output)
+    print(f&quot;HTML file generated: {output_file}&quot;)
+#https://chatgpt.com/c/67377b5a-75ac-8010-90de-4f806944c231</div>
+<div class="file" style="margin-left: 0px;">📄 eslint.config.mjs</div>
+<div class="content">import { dirname } from &quot;path&quot;;
+import { fileURLToPath } from &quot;url&quot;;
+import { FlatCompat } from &quot;@eslint/eslintrc&quot;;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends(&quot;next/core-web-vitals&quot;, &quot;next/typescript&quot;),
+];
+
+export default eslintConfig;
+</div>
+<div class="file" style="margin-left: 0px;">📄 images.md</div>
+<div class="content">I&#x27;ll provide a detailed list of all required images, their recommended sizes, and locations for the website.
+
+1. Logo Images:
+```
+/public/assets/images/logo/
+- logo.png (200x60px, PNG with transparency)
+- favicon.ico (32x32px)
+- logo-white.png (200x60px, white version for dark backgrounds)
+```
+
+2. Product Images:
+```
+/public/assets/images/products/
+- omega-3-max.jpg (800x800px)
+- vitamax-az.jpg (800x800px)
+- virga-x.jpg (800x800px)
+- collagen-plus.jpg (800x800px)
+- joint-aid.jpg (800x800px)
+- hair-aid.jpg (800x800px)
+- zinc-50.jpg (800x800px)
+- royal-max.jpg (800x800px)
+- osteo-aid.jpg (800x800px)
+- d3-5000.jpg (800x800px)
+```
+Product image specifications:
+- Square format (1:1 ratio)
+- High resolution (800x800px minimum)
+- White/light background
+- Product bottle/package centered
+- Clear, professional product photography
+
+3. Agent Logos:
+```
+/public/assets/images/agents/
+- spirit.png (400x200px)
+- royal.png (400x200px)
+- pharmazone.png (400x200px)
+```
+Agent logo specifications:
+- PNG format with transparency
+- Landscape orientation
+- High resolution for retina displays
+- Professional company logos
+
+4. Hero Images:
+```
+/public/assets/images/hero/
+- home-hero.jpg (1920x1080px)
+- about-hero.jpg (1920x600px)
+- products-hero.jpg (1920x600px)
+```
+Hero image specifications:
+- High resolution, landscape format
+- Professional healthcare/pharmaceutical themed
+- Light/neutral areas for text overlay
+- Professional environment/laboratory shots
+
+5. About Page Images:
+```
+/public/assets/images/about/
+- facility.jpg (1200x800px)
+- lab.jpg (1200x800px)
+- team.jpg (1200x800px)
+```
+
+6. Background Assets:
+```
+/public/assets/images/backgrounds/
+- pattern-light.svg (scalable)
+- pattern-dark.svg (scalable)
+- dots.svg (scalable)
+```
+
+File Naming Conventions:
+- Use lowercase letters
+- Use hyphens for spaces
+- Be descriptive but concise
+- Include dimensions in file name if multiple sizes exist
+
+Image Optimization Guidelines:
+1. Compress all images without visible quality loss
+2. Include WebP versions for modern browsers
+3. Maintain aspect ratios
+4. Consider lazy loading for below-the-fold images
+5. Include proper alt text in code
+6. Optimize for web delivery
+
+Format Preferences:
+- Product Images: JPG (better for photographs)
+- Logos: PNG with transparency
+- Icons: SVG preferred
+- Background Patterns: SVG
+- Hero Images: JPG
+</div>
+<div class="file" style="margin-left: 0px;">📄 next-env.d.ts</div>
+<div class="content">/// &lt;reference types=&quot;next&quot; /&gt;
+/// &lt;reference types=&quot;next/image-types/global&quot; /&gt;
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+</div>
+<div class="file" style="margin-left: 0px;">📄 next.config.ts</div>
+<div class="content">// next.config.js
+/** @type {import(&#x27;next&#x27;).NextConfig} */
+const nextConfig = {
+  images: {
+    domains: [], // Add any external image domains here if needed
+  },
+  eslint: {
+    // Don&#x27;t stop production builds if there are warnings
+    ignoreDuringBuilds: true,
+  },
+}
+
+module.exports = nextConfig</div>
+<div class="file" style="margin-left: 0px;">📄 package.json</div>
+<div class="content">{
+  &quot;name&quot;: &quot;meditechus&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;private&quot;: true,
+  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;next dev&quot;,
+    &quot;build&quot;: &quot;next build&quot;,
+    &quot;start&quot;: &quot;next start&quot;,
+    &quot;lint&quot;: &quot;next lint&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;@headlessui/react&quot;: &quot;^2.2.0&quot;,
+    &quot;@heroicons/react&quot;: &quot;^2.2.0&quot;,
+    &quot;@hookform/resolvers&quot;: &quot;^3.10.0&quot;,
+    &quot;class-variance-authority&quot;: &quot;^0.7.1&quot;,
+    &quot;clsx&quot;: &quot;^2.1.1&quot;,
+    &quot;framer-motion&quot;: &quot;^11.18.0&quot;,
+    &quot;lucide-react&quot;: &quot;^0.471.1&quot;,
+    &quot;next&quot;: &quot;15.1.4&quot;,
+    &quot;react&quot;: &quot;^19.0.0&quot;,
+    &quot;react-dom&quot;: &quot;^19.0.0&quot;,
+    &quot;react-hook-form&quot;: &quot;^7.54.2&quot;,
+    &quot;tailwind-merge&quot;: &quot;^2.6.0&quot;,
+    &quot;zod&quot;: &quot;^3.24.1&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;@eslint/eslintrc&quot;: &quot;^3&quot;,
+    &quot;@types/node&quot;: &quot;^20&quot;,
+    &quot;@types/react&quot;: &quot;^19&quot;,
+    &quot;@types/react-dom&quot;: &quot;^19&quot;,
+    &quot;eslint&quot;: &quot;^9&quot;,
+    &quot;eslint-config-next&quot;: &quot;15.1.4&quot;,
+    &quot;postcss&quot;: &quot;^8&quot;,
+    &quot;tailwindcss&quot;: &quot;^3.4.1&quot;,
+    &quot;typescript&quot;: &quot;^5&quot;
+  }
+}
+</div>
+<div class="file" style="margin-left: 0px;">📄 postcss.config.mjs</div>
+<div class="content">/** @type {import(&#x27;postcss-load-config&#x27;).Config} */
+const config = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+
+export default config;
+</div>
+<div class="folder" style="margin-left: 0px;">📁 src</div>
+<div class="folder" style="margin-left: 20px;">📁 components</div>
+<div class="folder" style="margin-left: 40px;">📁 layout</div>
+<div class="file" style="margin-left: 60px;">📄 MainLayout.tsx</div>
+<div class="content">// src/components/layout/MainLayout.tsx
+
+import React from &#x27;react&#x27;;
+import { Header } from &#x27;./header/Header&#x27;;
+import { Footer } from &#x27;./footer/Footer&#x27;;
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+export const MainLayout: React.FC&lt;MainLayoutProps&gt; = ({ children }) =&gt; {
+  return (
+    &lt;div className=&quot;min-h-screen flex flex-col&quot;&gt;
+      &lt;Header /&gt;
+      &lt;main className=&quot;flex-grow&quot;&gt;
+        {children}
+      &lt;/main&gt;
+      &lt;Footer /&gt;
+    &lt;/div&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 footer</div>
+<div class="file" style="margin-left: 80px;">📄 Footer.tsx</div>
+<div class="content">// src/components/layout/footer/Footer.tsx
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { Facebook, Instagram, Twitter, MapPin } from &#x27;lucide-react&#x27;;
+import { COMPANY_NAME, COMPANY_ADDRESS, SOCIAL_LINKS, PRODUCT_CATEGORIES } from &#x27;@/lib/constants&#x27;;
+
+export const Footer: React.FC = () =&gt; {
+  return (
+    &lt;footer className=&quot;bg-gray-900 text-white&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12&quot;&gt;
+        &lt;div className=&quot;grid grid-cols-1 md:grid-cols-4 gap-8&quot;&gt;
+          {/* Company Info */}
+          &lt;div&gt;
+            &lt;h3 className=&quot;text-lg font-semibold mb-4&quot;&gt;{COMPANY_NAME}&lt;/h3&gt;
+            &lt;div className=&quot;flex items-start space-x-2 text-gray-300&quot;&gt;
+              &lt;MapPin className=&quot;h-5 w-5 mt-1 flex-shrink-0&quot; /&gt;
+              &lt;p&gt;{COMPANY_ADDRESS}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div className=&quot;mt-4 flex space-x-4&quot;&gt;
+              &lt;a href={SOCIAL_LINKS.facebook} className=&quot;text-gray-400 hover:text-white&quot;&gt;
+                &lt;Facebook className=&quot;h-6 w-6&quot; /&gt;
+              &lt;/a&gt;
+              &lt;a href={SOCIAL_LINKS.instagram} className=&quot;text-gray-400 hover:text-white&quot;&gt;
+                &lt;Instagram className=&quot;h-6 w-6&quot; /&gt;
+              &lt;/a&gt;
+              &lt;a href={SOCIAL_LINKS.twitter} className=&quot;text-gray-400 hover:text-white&quot;&gt;
+                &lt;Twitter className=&quot;h-6 w-6&quot; /&gt;
+              &lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          {/* Products */}
+          &lt;div&gt;
+            &lt;h3 className=&quot;text-lg font-semibold mb-4&quot;&gt;Products&lt;/h3&gt;
+            &lt;ul className=&quot;space-y-2&quot;&gt;
+              {PRODUCT_CATEGORIES.map((category) =&gt; (
+                &lt;li key={category.id}&gt;
+                  &lt;Link 
+                    href={`/products/${category.id}`}
+                    className=&quot;text-gray-300 hover:text-white&quot;
+                  &gt;
+                    {category.name}
+                  &lt;/Link&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/div&gt;
+
+          {/* Quick Links */}
+          &lt;div&gt;
+            &lt;h3 className=&quot;text-lg font-semibold mb-4&quot;&gt;Quick Links&lt;/h3&gt;
+            &lt;ul className=&quot;space-y-2&quot;&gt;
+              &lt;li&gt;
+                &lt;Link href=&quot;/about&quot; className=&quot;text-gray-300 hover:text-white&quot;&gt;
+                  About Us
+                &lt;/Link&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;Link href=&quot;/faq&quot; className=&quot;text-gray-300 hover:text-white&quot;&gt;
+                  FAQ
+                &lt;/Link&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;Link href=&quot;/contact&quot; className=&quot;text-gray-300 hover:text-white&quot;&gt;
+                  Contact
+                &lt;/Link&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;Link href=&quot;/resellers&quot; className=&quot;text-gray-300 hover:text-white&quot;&gt;
+                  Find a Reseller
+                &lt;/Link&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+
+          {/* Business Hours */}
+          &lt;div&gt;
+            &lt;h3 className=&quot;text-lg font-semibold mb-4&quot;&gt;Business Hours&lt;/h3&gt;
+            &lt;ul className=&quot;space-y-2 text-gray-300&quot;&gt;
+              &lt;li&gt;Sunday - Thursday&lt;/li&gt;
+              &lt;li&gt;9:00 AM - 6:00 PM&lt;/li&gt;
+              &lt;li&gt;Kuwait Time (GMT+3)&lt;/li&gt;
+              &lt;li className=&quot;text-red-400&quot;&gt;Closed on Fridays &amp; Saturdays&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        {/* Bottom Bar */}
+        &lt;div className=&quot;mt-12 pt-8 border-t border-gray-800 text-center text-gray-400&quot;&gt;
+          &lt;p&gt;© {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/footer&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 header</div>
+<div class="file" style="margin-left: 80px;">📄 Header.tsx</div>
+<div class="content">// src/components/layout/header/Header.tsx
+
+import React from &#x27;react&#x27;;
+import { Phone, Mail, Clock } from &#x27;lucide-react&#x27;;
+import { Navbar } from &#x27;@/components/ui/navigation/Navbar&#x27;;
+import { COMPANY_PHONE, COMPANY_EMAIL, BUSINESS_HOURS } from &#x27;@/lib/constants&#x27;;
+
+export const Header: React.FC = () =&gt; {
+  return (
+    &lt;header className=&quot;bg-white&quot;&gt;
+      {/* Top bar */}
+      &lt;div className=&quot;bg-gray-50 py-2&quot;&gt;
+        &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+          &lt;div className=&quot;flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600&quot;&gt;
+            &lt;div className=&quot;flex items-center space-x-4&quot;&gt;
+              &lt;div className=&quot;flex items-center&quot;&gt;
+                &lt;Phone className=&quot;h-4 w-4 mr-1&quot; /&gt;
+                &lt;a href={`tel:${COMPANY_PHONE}`} className=&quot;hover:text-blue-600&quot;&gt;
+                  {COMPANY_PHONE}
+                &lt;/a&gt;
+              &lt;/div&gt;
+              &lt;div className=&quot;flex items-center&quot;&gt;
+                &lt;Mail className=&quot;h-4 w-4 mr-1&quot; /&gt;
+                &lt;a href={`mailto:${COMPANY_EMAIL}`} className=&quot;hover:text-blue-600&quot;&gt;
+                  {COMPANY_EMAIL}
+                &lt;/a&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div className=&quot;flex items-center mt-2 sm:mt-0&quot;&gt;
+              &lt;Clock className=&quot;h-4 w-4 mr-1&quot; /&gt;
+              &lt;span&gt;
+                {BUSINESS_HOURS.days}: {BUSINESS_HOURS.weekdays}
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      {/* Main navigation */}
+      &lt;Navbar /&gt;
+    &lt;/header&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 40px;">📁 sections</div>
+<div class="folder" style="margin-left: 60px;">📁 about</div>
+<div class="file" style="margin-left: 80px;">📄 AboutContent.tsx</div>
+<div class="content">// src/components/sections/about/AboutContent.tsx
+
+import React from &#x27;react&#x27;;
+import Image from &#x27;next/image&#x27;;
+import { CheckCircle } from &#x27;lucide-react&#x27;;
+
+export const AboutContent: React.FC = () =&gt; {
+  const values = [
+    { title: &#x27;Quality&#x27;, description: &#x27;Premium USA-made supplements meeting highest standards&#x27; },
+    { title: &#x27;Trust&#x27;, description: &#x27;Building lasting relationships with customers and partners&#x27; },
+    { title: &#x27;Innovation&#x27;, description: &#x27;Continuously improving our product formulations&#x27; },
+    { title: &#x27;Service&#x27;, description: &#x27;Dedicated support for all your health needs&#x27; },
+  ];
+
+  return (
+    &lt;div className=&quot;space-y-16&quot;&gt;
+      {/* Company Overview */}
+      &lt;section className=&quot;grid grid-cols-1 lg:grid-cols-2 gap-12 items-center&quot;&gt;
+        &lt;div&gt;
+          &lt;h2 className=&quot;text-3xl font-bold text-gray-900 mb-6&quot;&gt;Our Story&lt;/h2&gt;
+          &lt;div className=&quot;prose lg:prose-lg&quot;&gt;
+            &lt;p&gt;
+              Since our establishment, Meditech has been dedicated to providing premium health supplements
+              to customers in Kuwait. Our commitment to quality and customer satisfaction has made us
+              a trusted name in the healthcare industry.
+            &lt;/p&gt;
+            &lt;p&gt;
+              We partner with leading manufacturers in the USA to ensure our products meet the highest
+              standards of quality and efficacy. Every supplement undergoes rigorous testing and
+              quality control measures.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;relative h-[400px]&quot;&gt;
+          &lt;Image
+            src=&quot;/assets/images/about/company.jpg&quot;
+            alt=&quot;Meditech facility&quot;
+            fill
+            className=&quot;object-cover rounded-lg&quot;
+          /&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      {/* Company Values */}
+      &lt;section&gt;
+        &lt;h2 className=&quot;text-3xl font-bold text-gray-900 mb-8 text-center&quot;&gt;Our Values&lt;/h2&gt;
+        &lt;div className=&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8&quot;&gt;
+          {values.map((value, index) =&gt; (
+            &lt;div
+              key={index}
+              className=&quot;bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow&quot;
+            &gt;
+              &lt;CheckCircle className=&quot;h-12 w-12 text-blue-600 mb-4&quot; /&gt;
+              &lt;h3 className=&quot;text-xl font-semibold text-gray-900 mb-2&quot;&gt;{value.title}&lt;/h3&gt;
+              &lt;p className=&quot;text-gray-600&quot;&gt;{value.description}&lt;/p&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 contact</div>
+<div class="file" style="margin-left: 80px;">📄 ContactInfo.tsx</div>
+<div class="content">// src/components/sections/contact/ContactInfo.tsx
+&#x27;use client&#x27;;
+
+import React from &#x27;react&#x27;;
+import { MapPin, Phone, Mail, Clock } from &#x27;lucide-react&#x27;;
+import { COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS, BUSINESS_HOURS } from &#x27;@/lib/constants&#x27;;
+
+const ContactInfo = () =&gt; {
+  return React.createElement(&#x27;div&#x27;, { 
+    className: &quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8&quot; 
+  }, [
+    React.createElement(&#x27;div&#x27;, {
+      key: &#x27;address&#x27;,
+      className: &quot;bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow&quot;
+    }, [
+      React.createElement(&#x27;div&#x27;, { key: &#x27;icon-1&#x27;, className: &quot;text-blue-600 mb-4&quot; }, 
+        React.createElement(MapPin, { className: &quot;h-6 w-6&quot; })),
+      React.createElement(&#x27;h3&#x27;, { key: &#x27;title-1&#x27;, className: &quot;text-xl font-semibold text-gray-900 mb-2&quot; }, &quot;Visit Us&quot;),
+      React.createElement(&#x27;p&#x27;, { key: &#x27;content-1&#x27;, className: &quot;text-gray-600&quot; }, COMPANY_ADDRESS)
+    ]),
+
+    React.createElement(&#x27;div&#x27;, {
+      key: &#x27;phone&#x27;,
+      className: &quot;bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow&quot;
+    }, [
+      React.createElement(&#x27;div&#x27;, { key: &#x27;icon-2&#x27;, className: &quot;text-blue-600 mb-4&quot; }, 
+        React.createElement(Phone, { className: &quot;h-6 w-6&quot; })),
+      React.createElement(&#x27;h3&#x27;, { key: &#x27;title-2&#x27;, className: &quot;text-xl font-semibold text-gray-900 mb-2&quot; }, &quot;Call Us&quot;),
+      React.createElement(&#x27;a&#x27;, { 
+        key: &#x27;content-2&#x27;,
+        href: `tel:${COMPANY_PHONE.replace(/\s/g, &#x27;&#x27;)}`,
+        className: &quot;text-gray-600 hover:text-blue-600 transition-colors&quot;
+      }, COMPANY_PHONE)
+    ]),
+
+    React.createElement(&#x27;div&#x27;, {
+      key: &#x27;email&#x27;,
+      className: &quot;bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow&quot;
+    }, [
+      React.createElement(&#x27;div&#x27;, { key: &#x27;icon-3&#x27;, className: &quot;text-blue-600 mb-4&quot; }, 
+        React.createElement(Mail, { className: &quot;h-6 w-6&quot; })),
+      React.createElement(&#x27;h3&#x27;, { key: &#x27;title-3&#x27;, className: &quot;text-xl font-semibold text-gray-900 mb-2&quot; }, &quot;Email Us&quot;),
+      React.createElement(&#x27;a&#x27;, { 
+        key: &#x27;content-3&#x27;,
+        href: `mailto:${COMPANY_EMAIL}`,
+        className: &quot;text-gray-600 hover:text-blue-600 transition-colors&quot;
+      }, COMPANY_EMAIL)
+    ]),
+
+    React.createElement(&#x27;div&#x27;, {
+      key: &#x27;hours&#x27;,
+      className: &quot;bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow&quot;
+    }, [
+      React.createElement(&#x27;div&#x27;, { key: &#x27;icon-4&#x27;, className: &quot;text-blue-600 mb-4&quot; }, 
+        React.createElement(Clock, { className: &quot;h-6 w-6&quot; })),
+      React.createElement(&#x27;h3&#x27;, { key: &#x27;title-4&#x27;, className: &quot;text-xl font-semibold text-gray-900 mb-2&quot; }, &quot;Business Hours&quot;),
+      React.createElement(&#x27;p&#x27;, { key: &#x27;content-4&#x27;, className: &quot;text-gray-600&quot; }, 
+        `${BUSINESS_HOURS.days}: ${BUSINESS_HOURS.weekdays}`)
+    ])
+  ]);
+};
+
+export default ContactInfo;</div>
+<div class="folder" style="margin-left: 60px;">📁 home</div>
+<div class="file" style="margin-left: 80px;">📄 CategoryHighlight.tsx</div>
+<div class="content">// src/components/sections/home/CategoryHighlight.tsx
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { ArrowRight } from &#x27;lucide-react&#x27;;
+import { PRODUCT_CATEGORIES } from &#x27;@/lib/constants&#x27;;
+
+export const CategoryHighlight: React.FC = () =&gt; {
+  return (
+    &lt;section className=&quot;py-16 bg-white&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+        &lt;div className=&quot;text-center mb-12&quot;&gt;
+          &lt;h2 className=&quot;text-3xl font-bold text-gray-900&quot;&gt;
+            Product Categories
+          &lt;/h2&gt;
+          &lt;p className=&quot;mt-4 text-lg text-gray-600&quot;&gt;
+            Discover our comprehensive range of health supplements
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8&quot;&gt;
+          {PRODUCT_CATEGORIES.map((category) =&gt; (
+            &lt;Link
+              key={category.id}
+              href={`/products/${category.id}`}
+              className=&quot;group block&quot;
+            &gt;
+              &lt;div className=&quot;bg-gray-50 rounded-lg p-6 transition-all duration-200 group-hover:shadow-lg&quot;&gt;
+                &lt;div className=&quot;h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4&quot;&gt;
+                  {/* You can add specific icons for each category here */}
+                  &lt;ArrowRight className=&quot;h-6 w-6&quot; /&gt;
+                &lt;/div&gt;
+                &lt;h3 className=&quot;text-xl font-semibold text-gray-900 mb-2&quot;&gt;
+                  {category.name}
+                &lt;/h3&gt;
+                &lt;p className=&quot;text-gray-600 mb-4&quot;&gt;
+                  {category.description}
+                &lt;/p&gt;
+                &lt;span className=&quot;text-blue-600 group-hover:text-blue-700 flex items-center&quot;&gt;
+                  Learn more
+                  &lt;ArrowRight className=&quot;ml-2 h-4 w-4&quot; /&gt;
+                &lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+};</div>
+<div class="file" style="margin-left: 80px;">📄 FeaturedProducts.tsx</div>
+<div class="content">// src/components/sections/home/FeaturedProducts.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { Button } from &#x27;@/components/ui/button/Button&#x27;;
+import { ProductCard } from &#x27;@/components/ui/card/ProductCard&#x27;;
+import { useProducts } from &#x27;@/hooks/useProducts&#x27;;
+
+export const FeaturedProducts: React.FC = () =&gt; {
+  const { 
+    featuredProducts, 
+    loading, 
+    error, 
+    isEmpty 
+  } = useProducts();
+
+  if (loading) {
+    return (
+      &lt;div className=&quot;py-16 bg-gray-50&quot;&gt;
+        &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center&quot;&gt;
+          Loading products...
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  if (error) {
+    return (
+      &lt;div className=&quot;py-16 bg-gray-50&quot;&gt;
+        &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-red-600&quot;&gt;
+          Error: {error}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  if (isEmpty) {
+    return (
+      &lt;div className=&quot;py-16 bg-gray-50&quot;&gt;
+        &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center&quot;&gt;
+          No featured products available.
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  return (
+    &lt;section className=&quot;py-16 bg-gray-50&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+        &lt;div className=&quot;text-center&quot;&gt;
+          &lt;h2 className=&quot;text-3xl font-extrabold text-gray-900 sm:text-4xl&quot;&gt;
+            Featured Products
+          &lt;/h2&gt;
+          &lt;p className=&quot;mt-4 max-w-2xl mx-auto text-xl text-gray-500&quot;&gt;
+            Discover our most popular health supplements
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3&quot;&gt;
+          {featuredProducts.map((product) =&gt; (
+            &lt;Link 
+              key={product.id} 
+              href={`/products/${product.category}/${product.id}`}
+              className=&quot;transform hover:scale-105 transition-transform duration-200&quot;
+            &gt;
+              &lt;ProductCard product={product} /&gt;
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+
+        &lt;div className=&quot;mt-12 text-center&quot;&gt;
+          &lt;Link href=&quot;/products&quot;&gt;
+            &lt;Button variant=&quot;secondary&quot; size=&quot;lg&quot;&gt;
+              View All Products
+            &lt;/Button&gt;
+          &lt;/Link&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+};</div>
+<div class="file" style="margin-left: 80px;">📄 Hero.tsx</div>
+<div class="content">// src/components/sections/home/Hero.tsx
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import Image from &#x27;next/image&#x27;;
+import { Button } from &#x27;@/components/ui/button/Button&#x27;;
+
+export const Hero: React.FC = () =&gt; {
+  return (
+    &lt;div className=&quot;relative bg-blue-900 overflow-hidden&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto&quot;&gt;
+        &lt;div className=&quot;relative z-10 pb-8 bg-blue-900 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32&quot;&gt;
+          &lt;main className=&quot;mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28&quot;&gt;
+            &lt;div className=&quot;sm:text-center lg:text-left&quot;&gt;
+              &lt;h1 className=&quot;text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl&quot;&gt;
+                &lt;span className=&quot;block&quot;&gt;Premium Health&lt;/span&gt;
+                &lt;span className=&quot;block text-blue-400&quot;&gt;Supplements in Kuwait&lt;/span&gt;
+              &lt;/h1&gt;
+              &lt;p className=&quot;mt-3 text-base text-blue-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0&quot;&gt;
+                Discover our range of high-quality supplements designed to support your health and wellness journey. Made in USA with premium ingredients.
+              &lt;/p&gt;
+              &lt;div className=&quot;mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start&quot;&gt;
+                &lt;div className=&quot;rounded-md shadow&quot;&gt;
+                  &lt;Link href=&quot;/products&quot;&gt;
+                    &lt;Button variant=&quot;primary&quot; size=&quot;lg&quot;&gt;
+                      View Products
+                    &lt;/Button&gt;
+                  &lt;/Link&gt;
+                &lt;/div&gt;
+                &lt;div className=&quot;mt-3 sm:mt-0 sm:ml-3&quot;&gt;
+                  &lt;Link href=&quot;/contact&quot;&gt;
+                    &lt;Button variant=&quot;outline&quot; size=&quot;lg&quot;&gt;
+                      Contact Us
+                    &lt;/Button&gt;
+                  &lt;/Link&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/main&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div className=&quot;lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2&quot;&gt;
+      &lt;Image
+  className=&quot;h-full w-full object-cover&quot;
+  src=&quot;/assets/images/hero-image.jpg&quot;
+  alt=&quot;Health supplements&quot;
+  width={1920}
+  height={1080}
+  priority
+/&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};</div>
+<div class="file" style="margin-left: 80px;">📄 ResellerShowcase.tsx</div>
+<div class="content">// src/components/sections/home/ResellerShowcase.tsx
+
+import React from &#x27;react&#x27;;
+import Image from &#x27;next/image&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { Button } from &#x27;@/components/ui/button/Button&#x27;;
+
+export const ResellerShowcase: React.FC = () =&gt; {
+  const resellers = [
+    {
+      name: &#x27;Spirit Pharmacies&#x27;,
+      logo: &#x27;/assets/images/resellers/spirit.png&#x27;
+    },
+    {
+      name: &#x27;Royal Pharmacies&#x27;,
+      logo: &#x27;/assets/images/resellers/royal.png&#x27;
+    },
+    // Add more resellers as needed
+  ];
+
+  return (
+    &lt;section className=&quot;py-16 bg-gray-50&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+        &lt;div className=&quot;text-center mb-12&quot;&gt;
+          &lt;h2 className=&quot;text-3xl font-bold text-gray-900&quot;&gt;
+            Our Trusted Partners
+          &lt;/h2&gt;
+          &lt;p className=&quot;mt-4 text-lg text-gray-600&quot;&gt;
+            Find our products at these authorized resellers across Kuwait
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center mb-12&quot;&gt;
+          {resellers.map((reseller, index) =&gt; (
+            &lt;div
+              key={index}
+              className=&quot;relative w-40 h-20 grayscale hover:grayscale-0 transition-all duration-300&quot;
+            &gt;
+              &lt;Image
+                src={reseller.logo}
+                alt={reseller.name}
+                fill
+                className=&quot;object-contain&quot;
+              /&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+
+        &lt;div className=&quot;text-center&quot;&gt;
+          &lt;Link href=&quot;/resellers&quot;&gt;
+            &lt;Button variant=&quot;secondary&quot; size=&quot;lg&quot;&gt;
+              Find a Reseller Near You
+            &lt;/Button&gt;
+          &lt;/Link&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 products</div>
+<div class="file" style="margin-left: 80px;">📄 CategoryNav.tsx</div>
+<div class="content">// src/components/sections/products/CategoryNav.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { usePathname } from &#x27;next/navigation&#x27;;
+import { PRODUCT_CATEGORIES } from &#x27;@/lib/constants&#x27;;
+import { cn } from &#x27;@/lib/utils&#x27;;
+
+export const CategoryNav: React.FC = () =&gt; {
+  const pathname = usePathname();
+
+  return (
+    &lt;div className=&quot;bg-white shadow rounded-lg p-4&quot;&gt;
+      &lt;h2 className=&quot;text-lg font-semibold text-gray-900 mb-4&quot;&gt;Categories&lt;/h2&gt;
+      &lt;nav className=&quot;space-y-2&quot;&gt;
+        {PRODUCT_CATEGORIES.map((category) =&gt; (
+          &lt;Link
+            key={category.id}
+            href={`/products/${category.id}`}
+            className={cn(
+              &#x27;block px-4 py-2 rounded-md text-sm font-medium transition-colors&#x27;,
+              pathname === `/products/${category.id}`
+                ? &#x27;bg-blue-50 text-blue-700&#x27;
+                : &#x27;text-gray-600 hover:bg-gray-50 hover:text-gray-900&#x27;
+            )}
+          &gt;
+            {category.name}
+          &lt;/Link&gt;
+        ))}
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  );
+};</div>
+<div class="file" style="margin-left: 80px;">📄 ProductGrid.tsx</div>
+<div class="content">// src/components/sections/products/ProductGrid.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;; // Add this import
+import { ProductCard } from &#x27;@/components/ui/card/ProductCard&#x27;;
+import { useProducts } from &#x27;@/hooks/useProducts&#x27;;
+
+interface ProductGridProps {
+  category?: string;
+}
+
+export const ProductGrid: React.FC&lt;ProductGridProps&gt; = ({ category }) =&gt; {
+  const { products } = useProducts(category);
+
+  if (!products.length) {
+    return (
+      &lt;div className=&quot;text-center py-12&quot;&gt;
+        &lt;p className=&quot;text-gray-500&quot;&gt;No products found in this category.&lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  return (
+    &lt;div className=&quot;grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3&quot;&gt;
+      {products.map((product) =&gt; (
+        &lt;Link
+          key={product.id}
+          href={`/products/${product.category}/${product.id}`}
+          className=&quot;transform hover:scale-105 transition-all duration-300&quot;
+        &gt;
+          &lt;ProductCard product={product} /&gt;
+        &lt;/Link&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 40px;">📁 ui</div>
+<div class="folder" style="margin-left: 60px;">📁 button</div>
+<div class="file" style="margin-left: 80px;">📄 Button.tsx</div>
+<div class="content">// src/components/ui/button/Button.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import { cn } from &#x27;@/lib/utils&#x27;;
+
+interface ButtonProps extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  variant?: &#x27;primary&#x27; | &#x27;secondary&#x27; | &#x27;outline&#x27;;
+  size?: &#x27;sm&#x27; | &#x27;md&#x27; | &#x27;lg&#x27;;
+  fullWidth?: boolean;
+  isLoading?: boolean;
+  children: React.ReactNode;
+}
+
+export const Button = React.forwardRef&lt;HTMLButtonElement, ButtonProps&gt;(
+  ({ 
+    className, 
+    variant = &#x27;primary&#x27;, 
+    size = &#x27;md&#x27;, 
+    fullWidth = false,
+    isLoading = false,
+    children, 
+    ...props 
+  }, ref) =&gt; {
+    const baseStyles = &#x27;inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none&#x27;;
+    
+    const variants = {
+      primary: &#x27;bg-blue-600 text-white hover:bg-blue-700&#x27;,
+      secondary: &#x27;bg-gray-100 text-gray-900 hover:bg-gray-200&#x27;,
+      outline: &#x27;border-2 border-blue-600 text-blue-600 hover:bg-blue-50&#x27;
+    };
+
+    const sizes = {
+      sm: &#x27;h-9 px-3 text-sm&#x27;,
+      md: &#x27;h-10 px-4&#x27;,
+      lg: &#x27;h-11 px-6&#x27;
+    };
+
+    return (
+      &lt;button
+        ref={ref}
+        className={cn(
+          baseStyles,
+          variants[variant],
+          sizes[size],
+          fullWidth &amp;&amp; &#x27;w-full&#x27;,
+          className
+        )}
+        disabled={isLoading}
+        {...props}
+      &gt;
+        {isLoading ? (
+          &lt;span className=&quot;mr-2 animate-spin&quot;&gt;⚪&lt;/span&gt;
+        ) : null}
+        {children}
+      &lt;/button&gt;
+    );
+  }
+);
+
+Button.displayName = &#x27;Button&#x27;;</div>
+<div class="folder" style="margin-left: 60px;">📁 card</div>
+<div class="file" style="margin-left: 80px;">📄 ProductCard.tsx</div>
+<div class="content">// src/components/ui/card/ProductCard.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import Image from &#x27;next/image&#x27;;
+import { ArrowRight } from &#x27;lucide-react&#x27;; // Add this import
+import { Product } from &#x27;@/types&#x27;;
+import { cn } from &#x27;@/lib/utils&#x27;;
+
+interface ProductCardProps {
+  product: Product;
+  className?: string;
+}
+
+export const ProductCard: React.FC&lt;ProductCardProps&gt; = ({ product, className }) =&gt; {
+  return (
+    &lt;div className={cn(
+      &#x27;rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition-shadow&#x27;,
+      className
+    )}&gt;
+      &lt;div className=&quot;relative h-48 w-full&quot;&gt;
+        &lt;Image
+          src={product.imageUrl || `/assets/images/products/${product.id}.jpg`}
+          alt={product.name}
+          fill
+          className=&quot;object-cover&quot;
+        /&gt;
+      &lt;/div&gt;
+      
+      &lt;div className=&quot;p-4&quot;&gt;
+        &lt;h3 className=&quot;text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors&quot;&gt;
+          {product.name}
+        &lt;/h3&gt;
+        
+        &lt;div className=&quot;mt-2&quot;&gt;
+          &lt;span className=&quot;inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800&quot;&gt;
+            {product.capsuleCount} capsules
+          &lt;/span&gt;
+        &lt;/div&gt;
+        
+        &lt;p className=&quot;mt-2 text-sm text-gray-600 line-clamp-2&quot;&gt;
+          {product.description}
+        &lt;/p&gt;
+        
+        &lt;div className=&quot;mt-4&quot;&gt;
+          &lt;h4 className=&quot;text-sm font-medium text-gray-900&quot;&gt;Key Benefits:&lt;/h4&gt;
+          &lt;ul className=&quot;mt-2 space-y-1&quot;&gt;
+            {product.benefits.slice(0, 3).map((benefit, index) =&gt; (
+              &lt;li key={index} className=&quot;text-sm text-gray-600&quot;&gt;
+                • {benefit}
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        
+        &lt;div className=&quot;mt-4 pt-4 border-t border-gray-200 flex justify-between items-center&quot;&gt;
+          &lt;p className=&quot;text-sm font-medium text-gray-900&quot;&gt;
+            Usage: {product.usage}
+          &lt;/p&gt;
+          &lt;ArrowRight className=&quot;h-5 w-5 text-blue-600&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 disclosure</div>
+<div class="file" style="margin-left: 80px;">📄 Disclosure.tsx</div>
+<div class="content">// src/components/ui/disclosure/Disclosure.tsx
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import { Disclosure } from &#x27;@headlessui/react&#x27;;
+import { ChevronDown } from &#x27;lucide-react&#x27;;
+
+interface DisclosureComponentProps {
+  question: string;
+  answer: string;
+}
+
+export const DisclosureComponent: React.FC&lt;DisclosureComponentProps&gt; = ({
+  question,
+  answer
+}) =&gt; {
+  return (
+    &lt;Disclosure as=&quot;div&quot; className=&quot;bg-white rounded-lg shadow&quot;&gt;
+      {({ open }) =&gt; (
+        &lt;&gt;
+          &lt;Disclosure.Button className=&quot;flex justify-between w-full px-4 py-4 text-left&quot;&gt;
+            &lt;span className=&quot;text-lg font-medium text-gray-900&quot;&gt;
+              {question}
+            &lt;/span&gt;
+            &lt;ChevronDown
+              className={`w-5 h-5 text-gray-500 ${
+                open ? &#x27;transform rotate-180&#x27; : &#x27;&#x27;
+              }`}
+            /&gt;
+          &lt;/Disclosure.Button&gt;
+          &lt;Disclosure.Panel className=&quot;px-4 pb-4 text-gray-600&quot;&gt;
+            {answer}
+          &lt;/Disclosure.Panel&gt;
+        &lt;/&gt;
+      )}
+    &lt;/Disclosure&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 form</div>
+<div class="file" style="margin-left: 80px;">📄 ContactForm.tsx</div>
+<div class="content">// src/components/ui/form/ContactForm.tsx
+
+&quot;use client&quot;;
+
+import React from &#x27;react&#x27;;
+import { useForm } from &#x27;react-hook-form&#x27;;
+import { zodResolver } from &#x27;@hookform/resolvers/zod&#x27;;
+import { z } from &#x27;zod&#x27;;
+import { Button } from &#x27;@/components/ui/button/Button&#x27;;
+
+const contactSchema = z.object({
+  name: z.string().min(2, &#x27;Name must be at least 2 characters&#x27;),
+  email: z.string().email(&#x27;Invalid email address&#x27;),
+  subject: z.string().min(5, &#x27;Subject must be at least 5 characters&#x27;),
+  message: z.string().min(10, &#x27;Message must be at least 10 characters&#x27;)
+});
+
+type ContactFormData = z.infer&lt;typeof contactSchema&gt;;
+
+export const ContactForm: React.FC = () =&gt; {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm&lt;ContactFormData&gt;({
+    resolver: zodResolver(contactSchema)
+  });
+
+  const onSubmit = async (data: ContactFormData) =&gt; {
+    try {
+      // Here you would implement your form submission logic
+      await new Promise(resolve =&gt; setTimeout(resolve, 1000)); // Simulated delay
+      console.log(&#x27;Form data:&#x27;, data);
+      reset();
+      alert(&#x27;Message sent successfully!&#x27;);
+    } catch (error) {
+      console.error(&#x27;Error submitting form:&#x27;, error);
+      alert(&#x27;Failed to send message. Please try again.&#x27;);
+    }
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit(onSubmit)} className=&quot;space-y-6&quot;&gt;
+      &lt;div&gt;
+        &lt;label htmlFor=&quot;name&quot; className=&quot;block text-sm font-medium text-gray-700&quot;&gt;
+          Name
+        &lt;/label&gt;
+        &lt;input
+          {...register(&#x27;name&#x27;)}
+          type=&quot;text&quot;
+          id=&quot;name&quot;
+          className=&quot;mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500&quot;
+        /&gt;
+        {errors.name &amp;&amp; (
+          &lt;p className=&quot;mt-1 text-sm text-red-600&quot;&gt;{errors.name.message}&lt;/p&gt;
+        )}
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label htmlFor=&quot;email&quot; className=&quot;block text-sm font-medium text-gray-700&quot;&gt;
+          Email
+        &lt;/label&gt;
+        &lt;input
+          {...register(&#x27;email&#x27;)}
+          type=&quot;email&quot;
+          id=&quot;email&quot;
+          className=&quot;mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500&quot;
+        /&gt;
+        {errors.email &amp;&amp; (
+          &lt;p className=&quot;mt-1 text-sm text-red-600&quot;&gt;{errors.email.message}&lt;/p&gt;
+        )}
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label htmlFor=&quot;subject&quot; className=&quot;block text-sm font-medium text-gray-700&quot;&gt;
+          Subject
+        &lt;/label&gt;
+        &lt;input
+          {...register(&#x27;subject&#x27;)}
+          type=&quot;text&quot;
+          id=&quot;subject&quot;
+          className=&quot;mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500&quot;
+        /&gt;
+        {errors.subject &amp;&amp; (
+          &lt;p className=&quot;mt-1 text-sm text-red-600&quot;&gt;{errors.subject.message}&lt;/p&gt;
+        )}
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;label htmlFor=&quot;message&quot; className=&quot;block text-sm font-medium text-gray-700&quot;&gt;
+          Message
+        &lt;/label&gt;
+        &lt;textarea
+          {...register(&#x27;message&#x27;)}
+          id=&quot;message&quot;
+          rows={4}
+          className=&quot;mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500&quot;
+        /&gt;
+        {errors.message &amp;&amp; (
+          &lt;p className=&quot;mt-1 text-sm text-red-600&quot;&gt;{errors.message.message}&lt;/p&gt;
+        )}
+      &lt;/div&gt;
+
+      &lt;Button
+        type=&quot;submit&quot;
+        variant=&quot;primary&quot;
+        fullWidth
+        isLoading={isSubmitting}
+      &gt;
+        Send Message
+      &lt;/Button&gt;
+    &lt;/form&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 modal</div>
+<div class="file" style="margin-left: 80px;">📄 Modal.tsx</div>
+<div class="content">// src/components/ui/modal/Modal.tsx
+
+import { Fragment, useRef } from &#x27;react&#x27;;
+import { Dialog, Transition } from &#x27;@headlessui/react&#x27;;
+import { X } from &#x27;lucide-react&#x27;;
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () =&gt; void;
+  title: string;
+  children: React.ReactNode;
+  maxWidth?: &#x27;sm&#x27; | &#x27;md&#x27; | &#x27;lg&#x27; | &#x27;xl&#x27;;
+}
+
+export const Modal: React.FC&lt;ModalProps&gt; = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  maxWidth = &#x27;md&#x27;
+}) =&gt; {
+  const focusRef = useRef(null);
+
+  const maxWidthClasses = {
+    sm: &#x27;max-w-sm&#x27;,
+    md: &#x27;max-w-md&#x27;,
+    lg: &#x27;max-w-lg&#x27;,
+    xl: &#x27;max-w-xl&#x27;
+  };
+
+  return (
+    &lt;Transition.Root show={isOpen} as={Fragment}&gt;
+      &lt;Dialog 
+        as=&quot;div&quot; 
+        className=&quot;fixed inset-0 z-50 overflow-y-auto&quot; 
+        onClose={onClose}
+        initialFocus={focusRef}
+      &gt;
+        &lt;div className=&quot;flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0&quot;&gt;
+          &lt;Transition.Child
+            as={Fragment}
+            enter=&quot;ease-out duration-300&quot;
+            enterFrom=&quot;opacity-0&quot;
+            enterTo=&quot;opacity-100&quot;
+            leave=&quot;ease-in duration-200&quot;
+            leaveFrom=&quot;opacity-100&quot;
+            leaveTo=&quot;opacity-0&quot;
+          &gt;
+            &lt;Dialog.Overlay className=&quot;fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity&quot; /&gt;
+          &lt;/Transition.Child&gt;
+
+          &lt;span className=&quot;hidden sm:inline-block sm:h-screen sm:align-middle&quot; aria-hidden=&quot;true&quot;&gt;
+            &amp;#8203;
+          &lt;/span&gt;
+
+          &lt;Transition.Child
+            as={Fragment}
+            enter=&quot;ease-out duration-300&quot;
+            enterFrom=&quot;opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95&quot;
+            enterTo=&quot;opacity-100 translate-y-0 sm:scale-100&quot;
+            leave=&quot;ease-in duration-200&quot;
+            leaveFrom=&quot;opacity-100 translate-y-0 sm:scale-100&quot;
+            leaveTo=&quot;opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95&quot;
+          &gt;
+            &lt;div className={`inline-block transform rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:align-middle ${maxWidthClasses[maxWidth]} w-full`}&gt;
+              &lt;div className=&quot;flex items-center justify-between px-4 pt-5 pb-4 sm:p-6&quot;&gt;
+                &lt;Dialog.Title as=&quot;h3&quot; className=&quot;text-lg font-medium text-gray-900&quot;&gt;
+                  {title}
+                &lt;/Dialog.Title&gt;
+                &lt;button
+                  type=&quot;button&quot;
+                  className=&quot;rounded-md text-gray-400 hover:text-gray-500&quot;
+                  onClick={onClose}
+                  ref={focusRef}
+                &gt;
+                  &lt;X className=&quot;h-6 w-6&quot; aria-hidden=&quot;true&quot; /&gt;
+                &lt;/button&gt;
+              &lt;/div&gt;
+              &lt;div className=&quot;px-4 pb-5 sm:p-6&quot;&gt;
+                {children}
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/Transition.Child&gt;
+        &lt;/div&gt;
+      &lt;/Dialog&gt;
+    &lt;/Transition.Root&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 60px;">📁 navigation</div>
+<div class="file" style="margin-left: 80px;">📄 Navbar.tsx</div>
+<div class="content">// src/components/ui/navigation/Navbar.tsx
+&quot;use client&quot;;
+
+import React, { useState } from &#x27;react&#x27;;
+import Link from &#x27;next/link&#x27;;
+import { usePathname } from &#x27;next/navigation&#x27;;
+import { Menu, X } from &#x27;lucide-react&#x27;;
+import { cn } from &#x27;@/lib/utils&#x27;;
+import Image from &#x27;next/image&#x27;;
+
+
+export const Navbar: React.FC = () =&gt; {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navigation = [
+    { name: &#x27;Home&#x27;, href: &#x27;/&#x27; },
+    { name: &#x27;Products&#x27;, href: &#x27;/products&#x27; },
+    { name: &#x27;About&#x27;, href: &#x27;/about&#x27; },
+    { name: &#x27;FAQ&#x27;, href: &#x27;/faq&#x27; },
+    { name: &#x27;Contact&#x27;, href: &#x27;/contact&#x27; },
+    { name: &#x27;Resellers&#x27;, href: &#x27;/resellers&#x27; },
+  ];
+
+  const isActive = (path: string) =&gt; pathname === path;
+
+  return (
+    &lt;nav className=&quot;bg-white shadow-lg&quot;&gt;
+      &lt;div className=&quot;max-w-7xl mx-auto px-4 sm:px-6 lg:px-8&quot;&gt;
+        &lt;div className=&quot;flex justify-between h-16&quot;&gt;
+          &lt;div className=&quot;flex&quot;&gt;
+            &lt;Link href=&quot;/&quot; className=&quot;flex-shrink-0 flex items-center&quot;&gt;
+            &lt;Image
+  src=&quot;/assets/images/logo.png&quot;
+  alt=&quot;Meditech&quot;
+  width={200}
+  height={60}
+  className=&quot;h-8 w-auto&quot;
+  priority
+/&gt;
+            &lt;/Link&gt;
+          &lt;/div&gt;
+
+          {/* Desktop Navigation */}
+          &lt;div className=&quot;hidden sm:flex sm:space-x-8&quot;&gt;
+            {navigation.map((item) =&gt; (
+              &lt;Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  &#x27;inline-flex items-center px-1 pt-1 text-sm font-medium&#x27;,
+                  isActive(item.href)
+                    ? &#x27;text-blue-600 border-b-2 border-blue-600&#x27;
+                    : &#x27;text-gray-500 hover:text-gray-700 hover:border-gray-300&#x27;
+                )}
+              &gt;
+                {item.name}
+              &lt;/Link&gt;
+            ))}
+          &lt;/div&gt;
+
+          {/* Mobile menu button */}
+          &lt;div className=&quot;sm:hidden flex items-center&quot;&gt;
+            &lt;button
+              type=&quot;button&quot;
+              className=&quot;inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100&quot;
+              onClick={() =&gt; setIsMenuOpen(!isMenuOpen)}
+            &gt;
+              {isMenuOpen ? (
+                &lt;X className=&quot;block h-6 w-6&quot; aria-hidden=&quot;true&quot; /&gt;
+              ) : (
+                &lt;Menu className=&quot;block h-6 w-6&quot; aria-hidden=&quot;true&quot; /&gt;
+              )}
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      {/* Mobile menu */}
+      {isMenuOpen &amp;&amp; (
+        &lt;div className=&quot;sm:hidden&quot;&gt;
+          &lt;div className=&quot;pt-2 pb-3 space-y-1&quot;&gt;
+            {navigation.map((item) =&gt; (
+              &lt;Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  &#x27;block pl-3 pr-4 py-2 text-base font-medium&#x27;,
+                  isActive(item.href)
+                    ? &#x27;text-blue-600 bg-blue-50 border-l-4 border-blue-600&#x27;
+                    : &#x27;text-gray-500 hover:text-gray-700 hover:bg-gray-50&#x27;
+                )}
+                onClick={() =&gt; setIsMenuOpen(false)}
+              &gt;
+                {item.name}
+              &lt;/Link&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )}
+    &lt;/nav&gt;
+  );
+};</div>
+<div class="folder" style="margin-left: 20px;">📁 context</div>
+<div class="file" style="margin-left: 40px;">📄 ThemeContext.tsx</div>
+<div class="content">// src/context/ThemeContext.tsx
+
+&quot;use client&quot;;
+
+import React, { createContext, useContext, useState, useEffect } from &#x27;react&#x27;;
+
+type Theme = &#x27;light&#x27; | &#x27;dark&#x27;;
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () =&gt; void;
+}
+
+const ThemeContext = createContext&lt;ThemeContextType | undefined&gt;(undefined);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState&lt;Theme&gt;(&#x27;light&#x27;);
+
+  useEffect(() =&gt; {
+    // Check for stored theme preference
+    const storedTheme = localStorage.getItem(&#x27;theme&#x27;) as Theme;
+    if (storedTheme) {
+      setTheme(storedTheme);
+    } else if (window.matchMedia(&#x27;(prefers-color-scheme: dark)&#x27;).matches) {
+      setTheme(&#x27;dark&#x27;);
+    }
+  }, []);
+
+  const toggleTheme = () =&gt; {
+    const newTheme = theme === &#x27;light&#x27; ? &#x27;dark&#x27; : &#x27;light&#x27;;
+    setTheme(newTheme);
+    localStorage.setItem(&#x27;theme&#x27;, newTheme);
+  };
+
+  return (
+    &lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;
+      &lt;div data-theme={theme}&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error(&#x27;useTheme must be used within a ThemeProvider&#x27;);
+  }
+  return context;
+}</div>
+<div class="folder" style="margin-left: 20px;">📁 data</div>
+<div class="file" style="margin-left: 40px;">📄 products.ts</div>
+<div class="content">// src/data/products.ts
+
+import { Product } from &#x27;@/types&#x27;;
+
+const productsData: Product[] = [
+  {
+    id: &#x27;omega-3-max&#x27;,
+    name: &#x27;OMEGA-3 MAX&#x27;,
+    category: &#x27;general-health&#x27;,
+    description: &#x27;High-quality fish oil supplement for overall health&#x27;,
+    benefits: [
+      &#x27;Healthy eyes, hair &amp; skin&#x27;,
+      &#x27;Improves brain function&#x27;,
+      &#x27;Supports heart health&#x27;,
+      &#x27;Can reduce chronic inflammation&#x27;,
+      &#x27;Helps cognitive function&#x27;,
+      &#x27;Improves bone strength and joint health&#x27;
+    ],
+    usage: &#x27;1 softgel daily with meal&#x27;,
+    capsuleCount: 60,
+    imageUrl: &#x27;/assets/images/products/omega-3-max.jpg&#x27;,
+    featured: true,
+  },
+  {
+    id: &#x27;vitamax-az&#x27;,
+    name: &#x27;VITAMAX (A-Z)&#x27;,
+    category: &#x27;general-health&#x27;,
+    description: &#x27;Comprehensive multivitamin supplement&#x27;,
+    benefits: [
+      &#x27;Complete vitamin and mineral support&#x27;,
+      &#x27;Compensates for dietary deficiencies&#x27;,
+      &#x27;Supports overall health&#x27;,
+      &#x27;Daily nutritional support&#x27;
+    ],
+    usage: &#x27;One tablet daily after meals&#x27;,
+    capsuleCount: 60,
+    imageUrl: &#x27;/assets/images/products/vitamax-az.jpg&#x27;,
+    featured: true,
+  },
+  {
+    id: &#x27;virga-x&#x27;,
+    name: &#x27;VIRGA-X&#x27;,
+    category: &#x27;mens-health&#x27;,
+    description: &#x27;Men\&#x27;s sexual health and energy support&#x27;,
+    benefits: [
+      &#x27;Supports sexual health&#x27;,
+      &#x27;Increases energy levels&#x27;,
+      &#x27;Contains potassium and nitrate&#x27;,
+      &#x27;Improves exercise performance&#x27;
+    ],
+    usage: &#x27;One capsule twice daily&#x27;,
+    capsuleCount: 60,
+    imageUrl: &#x27;/assets/images/products/virga-x.jpg&#x27;,
+    featured: false,
+  },
+  {
+    id: &#x27;collagen-plus&#x27;,
+    name: &#x27;COLLAGEN PLUS&#x27;,
+    category: &#x27;hair-and-skin&#x27;,
+    description: &#x27;Premium collagen supplement with Vitamin C&#x27;,
+    benefits: [
+      &#x27;Supports skin elasticity&#x27;,
+      &#x27;Promotes hair strength&#x27;,
+      &#x27;Helps with joint health&#x27;,
+      &#x27;Contains antioxidants&#x27;
+    ],
+    usage: &#x27;One capsule twice daily&#x27;,
+    capsuleCount: 60,
+    imageUrl: &#x27;/assets/images/products/collagen-plus.jpg&#x27;,
+    featured: true,
+  },
+  {
+    id: &#x27;joint-aid&#x27;,
+    name: &#x27;JOINT AID&#x27;,
+    category: &#x27;bone-and-joint&#x27;,
+    description: &#x27;Complete joint health supplement&#x27;,
+    benefits: [
+      &#x27;Supports joint mobility&#x27;,
+      &#x27;Reduces inflammation&#x27;,
+      &#x27;Strengthens cartilage&#x27;,
+      &#x27;Promotes bone health&#x27;
+    ],
+    usage: &#x27;One tablet 2-3 times daily with meals&#x27;,
+    capsuleCount: 90,
+    imageUrl: &#x27;/assets/images/products/joint-aid.jpg&#x27;,
+    featured: false,
+  }
+];
+
+export default productsData;</div>
+<div class="folder" style="margin-left: 20px;">📁 hooks</div>
+<div class="file" style="margin-left: 40px;">📄 useMediaQuery.ts</div>
+<div class="content">// src/hooks/useMediaQuery.ts
+
+import { useState, useEffect } from &#x27;react&#x27;;
+
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() =&gt; {
+    const mediaQuery = window.matchMedia(query);
+    setMatches(mediaQuery.matches);
+
+    const handler = (event: MediaQueryListEvent) =&gt; {
+      setMatches(event.matches);
+    };
+
+    mediaQuery.addEventListener(&#x27;change&#x27;, handler);
+
+    return () =&gt; {
+      mediaQuery.removeEventListener(&#x27;change&#x27;, handler);
+    };
+  }, [query]);
+
+  return matches;
+}</div>
+<div class="file" style="margin-left: 40px;">📄 useProducts.ts</div>
+<div class="content">// src/hooks/useProducts.ts
+&quot;use client&quot;;
+
+import React, { useState, useEffect, useMemo } from &#x27;react&#x27;;  // Added useMemo here
+import { Product } from &#x27;@/types&#x27;;
+import productsData from &#x27;@/data/products&#x27;;
+
+export function useProducts(category?: string) {
+  const [products, setProducts] = useState&lt;Product[]&gt;([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState&lt;string | null&gt;(null);
+
+  useEffect(() =&gt; {
+    try {
+      let filteredProducts = productsData;
+      
+      if (category) {
+        filteredProducts = productsData.filter(
+          (product) =&gt; product.category === category
+        );
+      }
+
+      setProducts(filteredProducts);
+      setLoading(false);
+    } catch (error) {
+      console.error(&#x27;Failed to load products:&#x27;, error);
+      setError(&#x27;Failed to load products&#x27;);
+      setLoading(false);
+    }
+  }, [category]);
+
+  // Now using useMemo directly
+  const featuredProducts = useMemo(() =&gt; 
+    products.filter((product) =&gt; product.featured),
+    [products]
+  );
+
+  return {
+    products,
+    featuredProducts,
+    loading,
+    error,
+    isLoading: loading,
+    isError: !!error,
+    errorMessage: error,
+    isEmpty: !loading &amp;&amp; products.length === 0,
+    totalProducts: products.length,
+    totalFeatured: featuredProducts.length,
+  };
+}</div>
+<div class="folder" style="margin-left: 20px;">📁 lib</div>
+<div class="file" style="margin-left: 40px;">📄 constants.ts</div>
+<div class="content">// src/lib/constants.ts
+
+import { CategoryInfo } from &#x27;@/types&#x27;;
+
+export const COMPANY_NAME = &#x27;Meditech US&#x27;;
+export const COMPANY_PHONE = &#x27;9670 1116&#x27;;
+export const COMPANY_EMAIL = &#x27;info@meditechus.com&#x27;;
+export const COMPANY_ADDRESS = &#x27;Kuwait, Building 14-Al Muthanna Street&#x27;;
+
+export const BUSINESS_HOURS = {
+  weekdays: &#x27;9:00 AM - 6:00 PM&#x27;,
+  days: &#x27;Sunday - Thursday&#x27;,
+  timezone: &#x27;Kuwait Time (GMT+3)&#x27;,
+};
+
+export const PRODUCT_CATEGORIES: CategoryInfo[] = [
+  {
+    id: &#x27;general-health&#x27;,
+    name: &#x27;General Health&#x27;,
+    description: &#x27;Essential supplements for overall health and wellness&#x27;
+  },
+  {
+    id: &#x27;mens-health&#x27;,
+    name: &#x27;Men\&#x27;s Health&#x27;,
+    description: &#x27;Specialized supplements for men\&#x27;s vitality and wellness&#x27;
+  },
+  {
+    id: &#x27;hair-and-skin&#x27;,
+    name: &#x27;Hair &amp; Skin Care&#x27;,
+    description: &#x27;Products for hair growth and skin health&#x27;
+  },
+  {
+    id: &#x27;bone-and-joint&#x27;,
+    name: &#x27;Bone &amp; Joint Health&#x27;,
+    description: &#x27;Supplements for strong bones and healthy joints&#x27;
+  }
+];
+
+export const SOCIAL_LINKS = {
+  facebook: &#x27;https://facebook.com/meditechus&#x27;,
+  instagram: &#x27;https://instagram.com/meditechus&#x27;,
+  twitter: &#x27;https://twitter.com/meditechus&#x27;
+};
+
+export const META = {
+  title: &#x27;Meditech US - Premium Health Supplements&#x27;,
+  description: &#x27;Trusted provider of high-quality health supplements in Kuwait&#x27;,
+  keywords: &#x27;health supplements, vitamins, minerals, Kuwait, Meditech&#x27;
+};
+
+// Add this to your constants file
+export const PLACEHOLDER_IMAGES = {
+  logo: &#x27;/api/placeholder/200/60&#x27;,
+  hero: &#x27;/api/placeholder/1920/600&#x27;,
+  product: &#x27;/api/placeholder/800/800&#x27;,
+  reseller: &#x27;/api/placeholder/400/200&#x27;
+};</div>
+<div class="file" style="margin-left: 40px;">📄 products.ts</div>
+<div class="content">// src/lib/products.ts
+
+import { Product } from &#x27;@/types&#x27;;
+import productsData from &#x27;@/data/products&#x27;;
+
+export function getProduct(productId: string): Product | undefined {
+  return productsData.find(product =&gt; product.id === productId);
+}
+
+export function getProductsByCategory(category: string): Product[] {
+  return productsData.filter(product =&gt; product.category === category);
+}
+
+export function getFeaturedProducts(): Product[] {
+  return productsData.filter(product =&gt; product.featured);
+}
+
+export function getRelatedProducts(productId: string, category: string, limit = 3): Product[] {
+  return productsData
+    .filter(product =&gt; 
+      product.category === category &amp;&amp; 
+      product.id !== productId
+    )
+    .slice(0, limit);
+}
+
+export function searchProducts(query: string): Product[] {
+  const searchTerm = query.toLowerCase();
+  return productsData.filter(product =&gt; 
+    product.name.toLowerCase().includes(searchTerm) ||
+    product.description.toLowerCase().includes(searchTerm)
+  );
+}
+
+// Add this helper function for static path generation
+export function getAllProductIds(): string[] {
+  return productsData.map(product =&gt; product.id);
+}</div>
+<div class="file" style="margin-left: 40px;">📄 utils.ts</div>
+<div class="content">// src/lib/utils.ts
+
+import { type ClassValue, clsx } from &#x27;clsx&#x27;;
+import { twMerge } from &#x27;tailwind-merge&#x27;;
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatPhoneNumber(phone: string): string {
+  // Format phone numbers consistently
+  return phone.replace(/(\d{3})(\d{3})(\d{4})/, &#x27;($1) $2-$3&#x27;);
+}
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w ]+/g, &#x27;&#x27;)
+    .replace(/ +/g, &#x27;-&#x27;);
+}
+
+export function getImagePlaceholder(width: number, height: number): string {
+  return `/api/placeholder/${width}/${height}`;
+}
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length &lt;= maxLength) return text;
+  return text.slice(0, maxLength) + &#x27;...&#x27;;
+}</div>
+<div class="folder" style="margin-left: 20px;">📁 types</div>
+<div class="file" style="margin-left: 40px;">📄 index.ts</div>
+<div class="content">// src/types/index.ts
+
+export interface Product {
+    id: string;
+    name: string;
+    category: ProductCategory;
+    description: string;
+    benefits: string[];
+    usage: string;
+    capsuleCount: number;
+    ingredients?: string[];
+    imageUrl: string;
+  }
+  
+  export type ProductCategory = 
+    | &#x27;general-health&#x27;
+    | &#x27;mens-health&#x27;
+    | &#x27;hair-and-skin&#x27;
+    | &#x27;bone-and-joint&#x27;;
+  
+  export interface CategoryInfo {
+    id: ProductCategory;
+    name: string;
+    description: string;
+  }
+  
+  export interface Reseller {
+    id: string;
+    name: string;
+    logo: string;
+    locations: string[];
+    contactNumber?: string;
+    website?: string;
+  }
+  
+  export interface FaqItem {
+    id: string;
+    question: string;
+    answer: string;
+    category?: string;
+  }
+  
+  export interface ContactFormData {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  }</div>
+<div class="file" style="margin-left: 40px;">📄 next-page.d.ts</div>
+<div class="content">// src/types/next-page.d.ts
+
+declare module &#x27;next/types&#x27; {
+    export type PageProps&lt;P = {}, S = {}&gt; = {
+      params: P;
+      searchParams: S;
+    };
+  }</div>
+<div class="file" style="margin-left: 40px;">📄 next.d.ts</div>
+<div class="content">// src/types/next.d.ts
+
+import { Metadata } from &#x27;next&#x27;;
+
+declare module &#x27;next&#x27; {
+  export interface PageProps {
+    params: Record&lt;string, string&gt;;
+    searchParams: Record&lt;string, string | string[] | undefined&gt;;
+  }
+}</div>
+<div class="file" style="margin-left: 0px;">📄 tailwind.config.ts</div>
+<div class="content">import type { Config } from &quot;tailwindcss&quot;;
+
+export default {
+  content: [
+    &quot;./src/pages/**/*.{js,ts,jsx,tsx,mdx}&quot;,
+    &quot;./src/components/**/*.{js,ts,jsx,tsx,mdx}&quot;,
+    &quot;./src/app/**/*.{js,ts,jsx,tsx,mdx}&quot;,
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: &quot;var(--background)&quot;,
+        foreground: &quot;var(--foreground)&quot;,
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config;
+</div>
+<div class="file" style="margin-left: 0px;">📄 tsconfig.json</div>
+<div class="content">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;ES2017&quot;,
+    &quot;lib&quot;: [&quot;dom&quot;, &quot;dom.iterable&quot;, &quot;esnext&quot;],
+    &quot;allowJs&quot;: true,
+    &quot;skipLibCheck&quot;: true,
+    &quot;strict&quot;: true,
+    &quot;noEmit&quot;: true,
+    &quot;esModuleInterop&quot;: true,
+    &quot;module&quot;: &quot;esnext&quot;,
+    &quot;moduleResolution&quot;: &quot;bundler&quot;,
+    &quot;resolveJsonModule&quot;: true,
+    &quot;isolatedModules&quot;: true,
+    &quot;jsx&quot;: &quot;preserve&quot;,
+    &quot;incremental&quot;: true,
+    &quot;plugins&quot;: [
+      {
+        &quot;name&quot;: &quot;next&quot;
+      }
+    ],
+    &quot;paths&quot;: {
+      &quot;@/*&quot;: [&quot;./src/*&quot;]
+    },
+    &quot;typeRoots&quot;: [&quot;./src/types&quot;, &quot;./node_modules/@types&quot;]  // Add this line
+  },
+  &quot;include&quot;: [
+    &quot;next-env.d.ts&quot;,
+    &quot;**/*.ts&quot;,
+    &quot;**/*.tsx&quot;,
+    &quot;.next/types/**/*.ts&quot;,
+    &quot;src/types/**/*.d.ts&quot;  // Add this line
+  ],
+  &quot;exclude&quot;: [&quot;node_modules&quot;]
+}</div>
+</body></html>
