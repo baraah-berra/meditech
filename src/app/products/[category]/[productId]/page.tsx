@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button/Button';
 import productsData from '@/data/products';
 import type { Metadata } from 'next';
-
+import { Product } from '@/types';
 interface PageParams {
   params: {
     category: string;
@@ -15,16 +15,12 @@ interface PageParams {
   };
 }
 
-async function getProductData(productId: string) {
-  return new Promise(resolve => {
-    resolve(productsData.find(p => p.id === productId));
-  });
+async function getProductData(productId: string): Promise<Product | undefined> {
+  return productsData.find(p => p.id === productId);
 }
 
-async function getPageParams(params: PageParams['params']) {
-  return new Promise(resolve => {
-    resolve(params);
-  });
+async function getPageParams(params: PageParams['params']): Promise<PageParams['params']> {
+  return params;
 }
 
 function formatCategoryName(category: string) {
@@ -146,3 +142,4 @@ export default async function Page(props: PageParams) {
       </div>
     </div>
   );
+}
