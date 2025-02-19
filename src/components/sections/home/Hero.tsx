@@ -47,7 +47,6 @@ export const Hero: React.FC = () => {
   width={1920}
   height={1080}
   priority
-  unoptimized
 />
       </div>
     </div>
