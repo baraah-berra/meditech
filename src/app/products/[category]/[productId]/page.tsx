@@ -19,18 +19,13 @@ async function getProductData(productId: string): Promise<Product | undefined> {
   return productsData.find(p => p.id === productId);
 }
 
-async function getPageParams(params: PageParams['params']): Promise<PageParams['params']> {
-  return params;
-}
-
 function formatCategoryName(category: string) {
   return category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 export async function generateMetadata(
-  props: PageParams
+  { params }: PageParams
 ): Promise<Metadata> {
-  const params = await getPageParams(props.params);
   const product = await getProductData(params.productId);
 
   if (!product) {
@@ -50,12 +45,11 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function Page(props: PageParams) {
-  const params = await getPageParams(props.params);
-  const product = await getProductData(params.productId);
+export default function Page({ params }: PageParams) {
+  const product = productsData.find(p => p.id === params.productId);
 
   if (!product || product.category !== params.category) {
-    notFound();
+    return notFound();
   }
 
   const categoryName = formatCategoryName(params.category);
