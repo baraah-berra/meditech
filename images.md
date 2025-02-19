@@ -2,7 +2,7 @@ I'll provide a detailed list of all required images, their recommended sizes, an
 
 1. Logo Images:
 ```
-/public/assets/images/logo/
+/assets/images/logo/
 - logo.png (200x60px, PNG with transparency)
 - favicon.ico (32x32px)
 - logo-white.png (200x60px, white version for dark backgrounds)
@@ -10,7 +10,7 @@ I'll provide a detailed list of all required images, their recommended sizes, an
 
 2. Product Images:
 ```
-/public/assets/images/products/
+/assets/images/products/
 - omega-3-max.jpg (800x800px)
 - vitamax-az.jpg (800x800px)
 - virga-x.jpg (800x800px)
@@ -31,7 +31,7 @@ Product image specifications:
 
 3. Agent Logos:
 ```
-/public/assets/images/agents/
+/assets/images/agents/
 - spirit.png (400x200px)
 - royal.png (400x200px)
 - pharmazone.png (400x200px)
@@ -44,7 +44,7 @@ Agent logo specifications:
 
 4. Hero Images:
 ```
-/public/assets/images/hero/
+/assets/images/hero/
 - home-hero.jpg (1920x1080px)
 - about-hero.jpg (1920x600px)
 - products-hero.jpg (1920x600px)
@@ -57,7 +57,7 @@ Hero image specifications:
 
 5. About Page Images:
 ```
-/public/assets/images/about/
+/assets/images/about/
 - facility.jpg (1200x800px)
 - lab.jpg (1200x800px)
 - team.jpg (1200x800px)
@@ -65,7 +65,7 @@ Hero image specifications:
 
 6. Background Assets:
 ```
-/public/assets/images/backgrounds/
+/assets/images/backgrounds/
 - pattern-light.svg (scalable)
 - pattern-dark.svg (scalable)
 - dots.svg (scalable)
