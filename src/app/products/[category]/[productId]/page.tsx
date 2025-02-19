@@ -15,17 +15,7 @@ interface PageParams {
   };
 }
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  benefits: string[];
-  usage: string;
-  capsuleCount: number;
-}
-
-async function getProductData(productId: string): Promise<Product | undefined> {
+async function getProductData(productId: string) {
   return new Promise(resolve => {
     resolve(productsData.find(p => p.id === productId));
   });
@@ -44,9 +34,9 @@ function formatCategoryName(category: string) {
 export async function generateMetadata(
   props: PageParams
 ): Promise<Metadata> {
-  const params = await getPageParams(props.params) as PageParams['params'];
+  const params = await getPageParams(props.params);
   const product = await getProductData(params.productId);
-  
+
   if (!product) {
     return { title: 'Product Not Found' };
   }
@@ -65,7 +55,7 @@ export function generateStaticParams() {
 }
 
 export default async function Page(props: PageParams) {
-  const params = await getPageParams(props.params) as PageParams['params'];
+  const params = await getPageParams(props.params);
   const product = await getProductData(params.productId);
 
   if (!product || product.category !== params.category) {
@@ -110,8 +100,6 @@ export default async function Page(props: PageParams) {
             className="object-contain p-4"
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-            unoptimized // Add this
-            loading="eager" // Add this
           />
         </div>
 
@@ -158,4 +146,3 @@ export default async function Page(props: PageParams) {
       </div>
     </div>
   );
-}
