@@ -62,6 +62,8 @@ export default function AgentsPage() {
                     alt={agent.name}
                     fill
                     className="object-contain"
+                    unoptimized // Add this
+                    loading="eager" // Add this
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">

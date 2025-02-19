@@ -47,6 +47,8 @@ export const Hero: React.FC = () => {
   width={1920}
   height={1080}
   priority
+  unoptimized // Add this
+  loading="eager" // Add this
 />
       </div>
     </div>

@@ -41,6 +41,8 @@ export const ResellerShowcase: React.FC = () => {
                 alt={reseller.name}
                 fill
                 className="object-contain"
+                unoptimized // Add this
+                loading="eager" // Add this
               />
             </div>
           ))}

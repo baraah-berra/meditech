@@ -37,6 +37,8 @@ export const AboutContent: React.FC = () => {
             alt="Meditech facility"
             fill
             className="object-cover rounded-lg"
+            unoptimized // Add this
+            loading="eager" // Add this
           />
         </div>
       </section>

@@ -37,6 +37,8 @@ export const Navbar: React.FC = () => {
   height={60}
   className="h-8 w-auto"
   priority
+  unoptimized // Add this
+  loading="eager" // Add this
 />
             </Link>
           </div>

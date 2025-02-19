@@ -24,6 +24,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
           alt={product.name}
           fill
           className="object-cover"
+            unoptimized // Add this
+      loading="eager" // Add this
         />
       </div>
       
